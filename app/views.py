@@ -2,7 +2,9 @@ from rest_framework.decorators import api_view
 from rest_framework.request import Request
 from rest_framework.response import Response
 
+from app.models import Log
 from app.serializers import FormulaSerializer
+from app.utils import get_client_ip
 
 
 @api_view(["POST"])
@@ -30,5 +32,11 @@ def check_formula(request: Request):
             clean_formula += char
 
         result = len(clean_formula) == 0
+
+        Log.objects.create(
+            body=formula,
+            ipaddress=get_client_ip(request),
+            result=result
+        )
 
     return Response({"result": result})
