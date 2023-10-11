@@ -4,10 +4,10 @@ from rest_framework_swagger.views import get_swagger_view
 
 schema_view = get_swagger_view(title='Pastebin API')
 
-from app.views import check_formula
+from app.views import CheckFormula
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('check_formula/', check_formula),
+    path('check_formula/', CheckFormula.as_view()),
     path('docs/', schema_view),
 ]
